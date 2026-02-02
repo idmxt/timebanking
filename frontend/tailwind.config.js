@@ -72,13 +72,18 @@ module.exports = {
         'bounce-slow': {
           '0%, 100%': { transform: 'translateY(-5%)' },
           '50%': { transform: 'translateY(0)' },
-        }
+        },
+        'slide-in-right': {
+          'from': { transform: 'translateX(100%)', opacity: '0' },
+          'to': { transform: 'translateX(0)', opacity: '1' },
+        },
       },
       animation: {
         'fade-in': 'fadeInUp 0.6s ease-out forwards',
         'float': 'float 8s ease-in-out infinite',
         'scroll': 'scroll 2s ease-in-out infinite',
         'bounce-slow': 'bounce-slow 3s ease-in-out infinite',
+        'slide-in-right': 'slide-in-right 0.3s ease-out forwards',
       }
     },
   },

@@ -6,29 +6,29 @@ const SolutionSection = () => {
     <section className="py-24 bg-white relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-grid-pattern opacity-5" />
-      
+
       {/* Gradient Blobs */}
       <div className="absolute top-1/4 left-0 w-96 h-96 bg-gradient-to-br from-primary/20 to-transparent rounded-full blur-3xl" />
       <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-gradient-to-bl from-secondary/20 to-transparent rounded-full blur-3xl" />
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-7xl mx-auto">
-          
+
           {/* Section Header */}
           <div className="text-center mb-16 animate-fade-in">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-success/10 rounded-full mb-6">
               <span className="text-sm font-semibold text-success">Решение</span>
             </div>
-            
+
             <h2 className="text-5xl font-bold text-text-primary mb-6">
               Timebanking —
               <span className="block mt-2 bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
                 экономика равенства
               </span>
             </h2>
-            
+
             <p className="text-xl text-text-secondary max-w-3xl mx-auto leading-relaxed">
-              Каждый час вашего времени равен часу времени другого человека. 
+              Каждый час вашего времени равен часу времени другого человека.
               Нет разницы между CEO и студентом — все навыки ценятся одинаково.
             </p>
           </div>
@@ -37,7 +37,7 @@ const SolutionSection = () => {
           <div className="mb-20">
             <div className="bg-gradient-to-br from-primary/5 via-accent/5 to-secondary/5 rounded-3xl p-12 border border-primary/10 shadow-soft">
               <div className="grid lg:grid-cols-3 gap-8 items-center">
-                
+
                 {/* Step 1 */}
                 <div className="text-center">
                   <div className="relative inline-flex mb-6">
@@ -78,7 +78,7 @@ const SolutionSection = () => {
               {/* Key Point */}
               <div className="mt-12 p-6 bg-white rounded-2xl text-center shadow-soft">
                 <p className="text-lg font-semibold text-text-primary">
-                  🎯 Час юриста = Час репетитора = Час программиста = Час повара
+                  Час юриста = Час репетитора = Час программиста = Час повара
                 </p>
                 <p className="text-text-secondary mt-2">
                   Все навыки равноценны. Время — единственная валюта.
@@ -115,7 +115,7 @@ const SolutionSection = () => {
                 color: "from-success to-success"
               }
             ].map((benefit, index) => (
-              <div 
+              <div
                 key={index}
                 className="group bg-white rounded-2xl p-6 shadow-soft hover:shadow-lifted transition-all duration-500 border border-gray-100 hover:border-primary/20 animate-fade-in"
                 style={{ animationDelay: `${index * 0.1}s` }}

@@ -50,7 +50,7 @@ const HeroSection = () => {
             </div>
 
             {/* Main Heading */}
-            <h1 className="hero-title text-6xl lg:text-7xl leading-tight text-text-primary">
+            <h1 className="hero-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight text-text-primary">
               Время — это
               <span className="block mt-2 bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
                 новая валюта
@@ -58,7 +58,7 @@ const HeroSection = () => {
             </h1>
 
             {/* Description */}
-            <p className="text-xl text-text-secondary leading-relaxed max-w-xl">
+            <p className="text-base sm:text-lg md:text-xl text-text-secondary leading-relaxed max-w-xl">
               Обменивайтесь навыками и услугами без денег.
               <span className="font-semibold text-primary"> 1 час вашего времени = 1 час чьего-то времени.</span>
               {' '}Присоединяйтесь к сообществу, где ценится опыт, а не кошелек.
@@ -98,10 +98,10 @@ const HeroSection = () => {
             </div>
 
             {/* CTA Buttons */}
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
               <Link
                 to="/register"
-                className="btn-primary group inline-flex items-center gap-2"
+                className="btn-primary group inline-flex items-center justify-center gap-2 w-full sm:w-auto"
               >
                 Начать бесплатно
                 <ArrowRight
@@ -112,7 +112,7 @@ const HeroSection = () => {
 
               <Link
                 to="#how-it-works"
-                className="btn-secondary inline-flex items-center gap-2"
+                className="btn-secondary inline-flex items-center justify-center gap-2 w-full sm:w-auto"
               >
                 Как это работает
               </Link>

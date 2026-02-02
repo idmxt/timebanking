@@ -47,6 +47,7 @@ function App() {
                             <Route path="/dashboard" element={<Dashboard />} />
                             <Route path="/services" element={<Services />} />
                             <Route path="/services/create" element={<CreateService />} />
+                            <Route path="/services/edit/:id" element={<CreateService />} />
                             <Route path="/favorites" element={<Favorites />} />
                             <Route path="/bookings" element={<Bookings />} />
                             <Route path="/messages" element={<Messages />} />

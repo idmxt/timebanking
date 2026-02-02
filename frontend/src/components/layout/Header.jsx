@@ -211,65 +211,130 @@ const Header = () => {
           {/* Mobile Menu Button */}
           {isAuthenticated && (
             <button
-              className="md:hidden"
+              className="md:hidden p-2 -mr-2 text-text-primary hover:text-primary transition-colors"
               onClick={() => setShowMobileMenu(!showMobileMenu)}
+              aria-label="Toggle menu"
             >
-              {showMobileMenu ? <X size={24} /> : <Menu size={24} />}
+              {showMobileMenu ? <X size={28} /> : <Menu size={28} />}
             </button>
           )}
         </div>
 
+        {/* Mobile Menu Backdrop */}
+        {showMobileMenu && isAuthenticated && (
+          <div
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 md:hidden animate-fade-in"
+            onClick={() => setShowMobileMenu(false)}
+          />
+        )}
+
         {/* Mobile Menu */}
         {showMobileMenu && isAuthenticated && (
-          <nav className="md:hidden py-4 border-t">
-            <Link
-              to="/dashboard"
-              className="block py-2 text-gray-700 font-medium"
-              onClick={() => setShowMobileMenu(false)}
-            >
-              Dashboard
-            </Link>
-            <Link
-              to="/services"
-              className="block py-2 text-gray-700 font-medium"
-              onClick={() => setShowMobileMenu(false)}
-            >
-              Услуги
-            </Link>
-            <Link
-              to="/bookings"
-              className="block py-2 text-gray-700 font-medium"
-              onClick={() => setShowMobileMenu(false)}
-            >
-              Бронирования
-            </Link>
-            <Link
-              to="/messages"
-              className="block py-2 text-gray-700 font-medium"
-              onClick={() => setShowMobileMenu(false)}
-            >
-              Сообщения
-            </Link>
-            <Link
-              to="/favorites"
-              className="block py-2 text-gray-700 font-medium"
-              onClick={() => setShowMobileMenu(false)}
-            >
-              Избранное
-            </Link>
-            <Link
-              to={`/profile/${user.id}`}
-              className="block py-2 text-gray-700 font-medium"
-              onClick={() => setShowMobileMenu(false)}
-            >
-              Профиль
-            </Link>
-            <button
-              onClick={handleLogout}
-              className="block py-2 text-red-600 w-full text-left font-medium mt-2 pt-2 border-t"
-            >
-              Выйти
-            </button>
+          <nav className="fixed top-20 left-0 right-0 bottom-0 bg-white z-50 md:hidden overflow-y-auto animate-slide-in-right">
+            <div className="p-6 space-y-2">
+              {/* User Info */}
+              <div className="pb-6 mb-6 border-b border-surface-dark">
+                <div className="flex items-center gap-4">
+                  {user?.avatar_url ? (
+                    <img
+                      src={`http://localhost:5001${user.avatar_url}`}
+                      alt={user.name}
+                      className="w-16 h-16 rounded-2xl object-cover shadow-soft"
+                    />
+                  ) : (
+                    <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary text-2xl font-bold shadow-soft">
+                      {user?.name?.charAt(0)}
+                    </div>
+                  )}
+                  <div>
+                    <p className="font-bold text-text-primary text-lg">{user?.name}</p>
+                    <p className="text-sm text-text-muted">{user?.email}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Navigation Links */}
+              <Link
+                to="/dashboard"
+                className="flex items-center gap-3 px-4 py-4 rounded-2xl text-text-secondary hover:bg-warm-cream hover:text-primary transition-all font-medium text-lg"
+                onClick={() => setShowMobileMenu(false)}
+              >
+                Dashboard
+              </Link>
+              <Link
+                to="/services"
+                className="flex items-center gap-3 px-4 py-4 rounded-2xl text-text-secondary hover:bg-warm-cream hover:text-primary transition-all font-medium text-lg"
+                onClick={() => setShowMobileMenu(false)}
+              >
+                Услуги
+              </Link>
+              <Link
+                to="/bookings"
+                className="flex items-center gap-3 px-4 py-4 rounded-2xl text-text-secondary hover:bg-warm-cream hover:text-primary transition-all font-medium text-lg"
+                onClick={() => setShowMobileMenu(false)}
+              >
+                Бронирования
+              </Link>
+              <Link
+                to="/messages"
+                className="flex items-center gap-3 px-4 py-4 rounded-2xl text-text-secondary hover:bg-warm-cream hover:text-primary transition-all font-medium text-lg relative"
+                onClick={() => setShowMobileMenu(false)}
+              >
+                Сообщения
+                {unreadCount > 0 && (
+                  <span className="ml-auto px-2 py-1 bg-primary text-white text-xs font-bold rounded-full">
+                    {unreadCount > 9 ? '9+' : unreadCount}
+                  </span>
+                )}
+              </Link>
+              <Link
+                to="/favorites"
+                className="flex items-center gap-3 px-4 py-4 rounded-2xl text-text-secondary hover:bg-warm-cream hover:text-primary transition-all font-medium text-lg"
+                onClick={() => setShowMobileMenu(false)}
+              >
+                <Heart size={20} />
+                Избранное
+              </Link>
+
+              <div className="my-6 border-t border-surface-dark"></div>
+
+              {user?.role === 'admin' && (
+                <Link
+                  to="/admin"
+                  className="flex items-center gap-3 px-4 py-4 rounded-2xl text-text-secondary hover:bg-warm-cream hover:text-primary transition-all font-medium text-lg"
+                  onClick={() => setShowMobileMenu(false)}
+                >
+                  <Shield size={20} />
+                  Админ-панель
+                </Link>
+              )}
+              <Link
+                to={`/profile/${user.id}`}
+                className="flex items-center gap-3 px-4 py-4 rounded-2xl text-text-secondary hover:bg-warm-cream hover:text-primary transition-all font-medium text-lg"
+                onClick={() => setShowMobileMenu(false)}
+              >
+                <UserIcon size={20} />
+                Профиль
+              </Link>
+              <Link
+                to="/settings"
+                className="flex items-center gap-3 px-4 py-4 rounded-2xl text-text-secondary hover:bg-warm-cream hover:text-primary transition-all font-medium text-lg"
+                onClick={() => setShowMobileMenu(false)}
+              >
+                <Settings size={20} />
+                Настройки
+              </Link>
+
+              <div className="my-6 border-t border-surface-dark"></div>
+
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-3 px-4 py-4 rounded-2xl text-error hover:bg-error/5 w-full text-left transition-all font-medium text-lg"
+              >
+                <LogOut size={20} />
+                Выйти
+              </button>
+            </div>
           </nav>
         )}
       </div>

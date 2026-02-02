@@ -1,5 +1,5 @@
-import React, { useState, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useCallback, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Camera, Clock, MapPin, Globe, ChevronDown,
   Plus, X, Calendar, Check, AlertCircle, Sparkles
@@ -21,6 +21,8 @@ const categories = [
 
 const CreateService = () => {
   const navigate = useNavigate();
+  const { id } = useParams(); // Get service ID for edit mode
+  const isEditMode = Boolean(id);
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -65,6 +67,41 @@ const CreateService = () => {
     }
   };
 
+  // Load service data in edit mode
+  useEffect(() => {
+    if (isEditMode && id) {
+      const loadService = async () => {
+        try {
+          setLoading(true);
+          const response = await api.get(`/services/${id}`);
+          const service = response.data;
+
+          setFormData({
+            title: service.title || '',
+            description: service.description || '',
+            category: service.category || '',
+            duration: service.duration || 1,
+            location_type: service.location_type || 'online',
+            city: service.city || '',
+            address: service.address || '',
+            schedule: service.schedule ? JSON.parse(service.schedule) : []
+          });
+
+          if (service.image_url) {
+            setPreview(`http://localhost:5001${service.image_url}`);
+          }
+        } catch (err) {
+          setError('Не удалось загрузить данные услуги');
+          console.error('Failed to load service:', err);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      loadService();
+    }
+  }, [isEditMode, id]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -87,12 +124,21 @@ const CreateService = () => {
       });
       if (image) data.append('image', image);
 
-      await api.post('/services', data, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
-      navigate('/dashboard'); // Редирект в дашборд после создания
+      if (isEditMode) {
+        // Update existing service
+        await api.put(`/services/${id}`, data, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        });
+      } else {
+        // Create new service
+        await api.post('/services', data, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        });
+      }
+
+      navigate('/dashboard');
     } catch (err) {
-      setError(err.response?.data?.error || 'Failed to create service');
+      setError(err.response?.data?.error || `Failed to ${isEditMode ? 'update' : 'create'} service`);
     } finally {
       setLoading(false);
     }
@@ -106,8 +152,12 @@ const CreateService = () => {
           <div className="inline-flex p-3 rounded-2xl bg-primary/10 text-primary mb-4">
             <Sparkles size={32} />
           </div>
-          <h1 className="text-4xl sm:text-5xl mb-2">Создать новую <span className="text-primary italic">услугу</span></h1>
-          <p className="text-text-secondary text-lg">Поделитесь своими талантами с сообществом</p>
+          <h1 className="text-4xl sm:text-5xl mb-2">
+            {isEditMode ? 'Редактировать' : 'Создать новую'} <span className="text-primary italic">услугу</span>
+          </h1>
+          <p className="text-text-secondary text-lg">
+            {isEditMode ? 'Обновите информацию о вашей услуге' : 'Поделитесь своими талантами с сообществом'}
+          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-8">
@@ -188,9 +238,9 @@ const CreateService = () => {
           </div>
 
           {/* Details & Location Card */}
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="card p-8 bg-white">
-              <h2 className="text-2xl mb-8 flex items-center gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+            <div className="card p-6 sm:p-8 bg-white">
+              <h2 className="text-xl sm:text-2xl mb-6 sm:mb-8 flex items-center gap-3">
                 <div className="w-8 h-8 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary text-sm">2</div>
                 Длительность
               </h2>
@@ -216,8 +266,8 @@ const CreateService = () => {
               </div>
             </div>
 
-            <div className="card p-8 bg-white">
-              <h2 className="text-2xl mb-8 flex items-center gap-3">
+            <div className="card p-6 sm:p-8 bg-white">
+              <h2 className="text-xl sm:text-2xl mb-6 sm:mb-8 flex items-center gap-3">
                 <div className="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center text-accent text-sm">3</div>
                 Формат и локация
               </h2>
@@ -370,7 +420,10 @@ const CreateService = () => {
               disabled={loading}
               className="btn-primary flex-[2] !py-4 text-xl shadow-lifted"
             >
-              {loading ? 'Создание...' : 'Опубликовать услугу'}
+              {loading
+                ? (isEditMode ? 'Сохранение...' : 'Создание...')
+                : (isEditMode ? 'Сохранить изменения' : 'Опубликовать услугу')
+              }
             </button>
           </div>
         </form>

@@ -38,7 +38,7 @@ const ServiceCard = ({ service, isInitiallyFavorite = false }) => {
       >
         {/* Service Image */}
         {service.image_url ? (
-          <div className="relative h-48 overflow-hidden">
+          <div className="relative h-36 sm:h-48 overflow-hidden">
             <img
               src={`http://localhost:5001${service.image_url}`}
               alt={service.title}
@@ -47,8 +47,8 @@ const ServiceCard = ({ service, isInitiallyFavorite = false }) => {
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
           </div>
         ) : (
-          <div className="relative h-48 bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10 flex items-center justify-center">
-            <div className="text-6xl opacity-20">
+          <div className="relative h-36 sm:h-48 bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10 flex items-center justify-center">
+            <div className="text-5xl sm:text-6xl opacity-20">
               {service.category === 'Образование' && '🎓'}
               {service.category === 'IT и технологии' && '💻'}
               {service.category === 'Ремонт и строительство' && '🛠️'}
@@ -63,25 +63,26 @@ const ServiceCard = ({ service, isInitiallyFavorite = false }) => {
           </div>
         )}
 
-        <div className="p-8 flex flex-col flex-1">
+        <div className="p-4 sm:p-6 md:p-8 flex flex-col flex-1">
           {/* Category & Price */}
-          <div className="flex justify-between items-center mb-6">
-            <span className="px-4 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
+          <div className="flex justify-between items-center mb-4 sm:mb-6">
+            <span className="px-3 sm:px-4 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
               {service.category}
             </span>
-            <div className="flex items-center gap-1.5 font-display font-bold text-text-primary text-xl">
-              <Clock size={18} className="text-primary" />
+            <div className="flex items-center gap-1.5 font-display font-bold text-text-primary text-lg sm:text-xl">
+              <Clock size={16} className="text-primary sm:hidden" />
+              <Clock size={18} className="text-primary hidden sm:block" />
               {service.duration}ч
             </div>
           </div>
 
           {/* Title */}
-          <h3 className="text-2xl mb-3 group-hover:text-primary transition-colors leading-tight pr-8">
+          <h3 className="text-lg sm:text-xl md:text-2xl mb-2 sm:mb-3 group-hover:text-primary transition-colors leading-tight pr-8">
             {service.title}
           </h3>
 
           {/* Description */}
-          <p className="text-text-secondary text-sm mb-6 line-clamp-3 leading-relaxed flex-1">
+          <p className="text-text-secondary text-sm mb-4 sm:mb-6 line-clamp-2 sm:line-clamp-3 leading-relaxed flex-1">
             {service.description}
           </p>
 

@@ -145,7 +145,7 @@ const ServiceDetail = () => {
 
             {/* Hero Image */}
             {service.image_url ? (
-              <div className="relative h-96 rounded-[32px] overflow-hidden shadow-lifted">
+              <div className="relative h-48 sm:h-64 md:h-80 lg:h-96 rounded-2xl sm:rounded-[32px] overflow-hidden shadow-lifted">
                 <img
                   src={`http://localhost:5001${service.image_url}`}
                   alt={service.title}
@@ -154,8 +154,8 @@ const ServiceDetail = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
               </div>
             ) : (
-              <div className="relative h-96 rounded-[32px] overflow-hidden shadow-lifted bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20 flex items-center justify-center">
-                <div className="text-9xl opacity-30">
+              <div className="relative h-48 sm:h-64 md:h-80 lg:h-96 rounded-2xl sm:rounded-[32px] overflow-hidden shadow-lifted bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20 flex items-center justify-center">
+                <div className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl opacity-30">
                   {service.category === 'Образование' && '🎓'}
                   {service.category === 'IT и технологии' && '💻'}
                   {service.category === 'Ремонт и строительство' && '🛠️'}
@@ -171,20 +171,20 @@ const ServiceDetail = () => {
             )}
 
             {/* Main Card */}
-            <div className="card p-10 bg-white relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full -mr-32 -mt-32" />
+            <div className="card p-6 sm:p-8 md:p-10 bg-white relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-48 h-48 sm:w-64 sm:h-64 bg-primary/5 rounded-full -mr-24 -mt-24 sm:-mr-32 sm:-mt-32" />
 
               <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-6">
-                  <span className="px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-bold uppercase tracking-wider">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+                  <span className="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-primary/10 text-primary text-xs sm:text-sm font-bold uppercase tracking-wider">
                     {service.category}
                   </span>
-                  <span className="px-4 py-1.5 rounded-full bg-secondary/10 text-secondary text-sm font-bold uppercase tracking-wider">
+                  <span className="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-secondary/10 text-secondary text-xs sm:text-sm font-bold uppercase tracking-wider">
                     {service.location_type === 'online' ? '🌐 Онлайн' : '📍 Оффлайн'}
                   </span>
                 </div>
 
-                <h1 className="text-4xl sm:text-5xl mb-6">{service.title}</h1>
+                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-4 sm:mb-6">{service.title}</h1>
 
                 <div className="flex flex-wrap gap-6 mb-10 pb-10 border-b border-surface-dark">
                   <div className="flex items-center gap-3">
@@ -277,7 +277,7 @@ const ServiceDetail = () => {
               </div>
 
               {user?.id === service.provider_id ? (
-                <Link to="/profile/edit" className="btn-secondary w-full text-center block !py-4">
+                <Link to={`/services/edit/${service.id}`} className="btn-secondary w-full text-center block !py-4">
                   Редактировать услугу
                 </Link>
               ) : (

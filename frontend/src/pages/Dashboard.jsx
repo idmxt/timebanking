@@ -41,41 +41,43 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-warm-cream pb-12 animate-fade-in">
       {/* Header */}
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <h1 className="text-4xl sm:text-5xl mb-2">
+      <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl mb-2">
           Привет, <span className="text-primary italic">{user?.name}</span>! 👋
         </h1>
-        <p className="text-text-secondary text-lg">Вот что происходит в вашем timebank</p>
+        <p className="text-text-secondary text-base sm:text-lg">Вот что происходит в вашем timebank</p>
       </div>
 
       <div className="max-w-7xl mx-auto px-4">
         {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-8 sm:mb-10">
           <Link
             to="/services/create"
-            className="flex items-center gap-6 p-8 card group"
+            className="flex items-center gap-4 sm:gap-6 p-6 sm:p-8 card group"
           >
-            <div className="icon-wrapper bg-primary">
+            <div className="icon-wrapper bg-primary flex-shrink-0">
               <div className="icon-glow" />
-              <Plus size={32} className="relative z-10 text-white" />
+              <Plus size={28} className="relative z-10 text-white sm:hidden" />
+              <Plus size={32} className="relative z-10 text-white hidden sm:block" />
             </div>
             <div>
-              <h3 className="text-2xl mb-1 group-hover:text-primary transition-colors">Создать услугу</h3>
-              <p className="text-text-muted">Предложите свои навыки сообществу</p>
+              <h3 className="text-xl sm:text-2xl mb-1 group-hover:text-primary transition-colors">Создать услугу</h3>
+              <p className="text-text-muted text-sm sm:text-base">Предложите свои навыки сообществу</p>
             </div>
           </Link>
 
           <Link
             to="/services"
-            className="flex items-center gap-6 p-8 card group"
+            className="flex items-center gap-4 sm:gap-6 p-6 sm:p-8 card group"
           >
-            <div className="icon-wrapper bg-secondary">
+            <div className="icon-wrapper bg-secondary flex-shrink-0">
               <div className="icon-glow" style={{ background: 'linear-gradient(135deg, #8B9D77 0%, #B3C5A1 100%)' }} />
-              <Search size={32} className="relative z-10 text-white" />
+              <Search size={28} className="relative z-10 text-white sm:hidden" />
+              <Search size={32} className="relative z-10 text-white hidden sm:block" />
             </div>
             <div>
-              <h3 className="text-2xl mb-1 group-hover:text-secondary transition-colors">Найти услугу</h3>
-              <p className="text-text-muted">Найдите то, что вам нужно сегодня</p>
+              <h3 className="text-xl sm:text-2xl mb-1 group-hover:text-secondary transition-colors">Найти услугу</h3>
+              <p className="text-text-muted text-sm sm:text-base">Найдите то, что вам нужно сегодня</p>
             </div>
           </Link>
         </div>
@@ -154,7 +156,7 @@ const Dashboard = () => {
               <h3 className="text-2xl m-0">Последние транзакции</h3>
               <Link to="/transactions" className="text-sm font-bold text-secondary hover:underline">Все транзакции</Link>
             </div>
-            
+
             {stats?.recent_transactions.length === 0 ? (
               <div className="text-center py-12">
                 <p className="text-text-muted">Транзакций пока нет</p>
