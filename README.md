@@ -1,158 +1,113 @@
-# TimeBanking Platform
+# TimeBanking Platform: Банк Времени
 
-A full-stack time-banking application where users exchange services using time as currency.  
-**1 hour of service = 1 time credit**
+Платформа для обмена услугами, где вместо денег используется время.
+**1 час услуги = 1 кредит времени.**
 
-## Tech Stack
+---
 
-| Layer | Technology |
-|-------|------------|
-| Frontend | React, Tailwind CSS, lucide-react |
-| Backend | Node.js, Express.js |
-| Database | SQLite |
-| Auth | JWT (Access + Refresh tokens) |
+## 🏛 Архитектура проекта
 
-## Quick Start
+Проект построен на стеке **NERDS (Node, Express, React, Database:SQLite)** с использованием Real-time уведомлений через Socket.io.
 
-### Backend
-```bash
-cd backend
-npm install
-npm run dev
-```
-Server runs on `http://localhost:5000`
+### Структура каталогов
+- `/frontend`: Клиентское приложение на React.
+- `/backend`: Серверное приложение на Node.js/Express.
+- `/backend/database`: Миграции, инициализация и начальные данные (seed).
+- `/backend/models`: Схемы данных SQLite.
+- `/backend/routes`: API эндпоинты, разделенные по функционалу.
 
-### Frontend
-```bash
-cd frontend
-npm install
-npm start
-```
-App runs on `http://localhost:3000`
+### Технологический стек
+- **Frontend**: React 19, Tailwind CSS, Lucide React (иконки), Axios, Socket.io-client.
+- **Backend**: Node.js, Express.js, Socket.io (real-time), Multer (загрузка файлов).
+- **Database**: SQLite3 (легкая и быстрая БД, не требующая отдельного сервера).
+- **Auth**: JWT (Access + Refresh tokens) для безопасной авторизации.
 
-## Environment Variables
+---
 
-Create `backend/.env`:
-```env
-PORT=5000
-NODE_ENV=development
-DATABASE_PATH=./database/timebank.db
-JWT_SECRET=your-secret-key
-JWT_REFRESH_SECRET=your-refresh-secret
-JWT_EXPIRE=15m
-JWT_REFRESH_EXPIRE=7d
-INITIAL_TIME_CREDITS=5.0
-MIN_TIME_BALANCE=-10.0
-MAX_FILE_SIZE=5242880
-```
+## 🚀 Как запустить проект
 
-## API Endpoints
+> [!IMPORTANT]
+> Проект поставляется без папки `node_modules`. Перед запуском необходимо установить зависимости.
 
-### Auth
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/auth/register` | Register new user |
-| POST | `/api/auth/login` | Login |
-| POST | `/api/auth/refresh` | Refresh access token |
-| GET | `/api/auth/me` | Get current user |
+### 1. Подготовка бэкенда
+1. Перейдите в папку бэкенда:
+   ```bash
+   cd backend
+   ```
+2. Установите зависимости:
+   ```bash
+   npm install
+   ```
+3. Создайте файл `.env` в корне папки `backend` (или используйте существующий):
+   ```env
+   PORT=5001
+   NODE_ENV=development
+   DATABASE_PATH=./database/timebank.db
+   JWT_SECRET=your-secret-key
+   JWT_REFRESH_SECRET=your-refresh-secret
+   INITIAL_TIME_CREDITS=5.0
+   ```
+4. Инициализируйте базу данных и наполните её тестовыми данными:
+   ```bash
+   node database/seed.js
+   ```
+5. Запустите сервер:
+   ```bash
+   npm run dev
+   ```
+   *Сервер будет доступен по адресу: `http://localhost:5001`*
 
-### Users
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/users/:id` | Get user profile |
-| PUT | `/api/users/profile` | Update profile |
-| POST | `/api/users/avatar` | Upload avatar |
-| POST | `/api/users/skills` | Add skill |
-| DELETE | `/api/users/skills/:id` | Remove skill |
-| GET | `/api/users/:id/reviews` | Get user reviews |
-| GET | `/api/users/:id/services` | Get user services |
-| GET | `/api/users/me/transactions` | Get transaction history |
+### 2. Подготовка фронтенда
+1. В новом терминале перейдите в папку фронтенда:
+   ```bash
+   cd frontend
+   ```
+2. Установите зависимости:
+   ```bash
+   npm install
+   ```
+3. Запустите приложение:
+   ```bash
+   npm start
+   ```
+   *Приложение откроется на: `http://localhost:3000`*
 
-### Services
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/services` | List services (with filters) |
-| GET | `/api/services/:id` | Get service details |
-| POST | `/api/services` | Create service |
-| PUT | `/api/services/:id` | Update service |
-| DELETE | `/api/services/:id` | Delete service |
-| GET | `/api/services/categories` | Get categories |
-| GET | `/api/services/cities` | Get cities |
+---
 
-### Bookings
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/bookings` | Get my bookings |
-| GET | `/api/bookings/:id` | Get booking details |
-| POST | `/api/bookings` | Create booking |
-| PUT | `/api/bookings/:id/accept` | Accept booking |
-| PUT | `/api/bookings/:id/decline` | Decline booking |
-| PUT | `/api/bookings/:id/cancel` | Cancel booking |
-| PUT | `/api/bookings/:id/complete` | Confirm completion |
+## 👥 Тестовые аккаунты
 
-### Messages
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/messages` | Get conversations |
-| GET | `/api/messages/:userId` | Get conversation |
-| POST | `/api/messages` | Send message |
-| GET | `/api/messages/unread` | Get unread count |
+Для быстрого тестирования в системе уже созданы следующие пользователи (пароль для всех: `password123`):
 
-### Reviews
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/reviews/user/:userId` | Get user reviews |
-| POST | `/api/reviews` | Create review |
-| GET | `/api/reviews/can-review/:bookingId` | Check can review |
+| Email | Имя | Специализация | Город |
+|-------|-----|---------------|-------|
+| `john@example.com` | Иван Петров | Преподаватель английского | Алматы |
+| `sarah@example.com` | Асем Кайтаровна | Веб-разработчик | Алматы |
+| `mike@example.com` | Асан Аскарович | Мастер по ремонту | Астана |
+| `anna@example.com` | Айдын Арманулы | Кондитер | Алматы |
+| `alex@example.com` | Александр Волков | Юрист | Астана |
 
-### Notifications
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/notifications` | Get notifications |
-| GET | `/api/notifications/unread-count` | Get unread count |
-| PUT | `/api/notifications/mark-all-read` | Mark all read |
-| PUT | `/api/notifications/:id/read` | Mark as read |
-| DELETE | `/api/notifications/:id` | Delete notification |
+---
 
-### Dashboard
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/dashboard/stats` | Get dashboard stats |
-| GET | `/api/dashboard/recommendations` | Get recommendations |
+## ✨ Основные возможности
 
-## Features
+- **Профили пользователей**: загрузка аватарок, список навыков, био.
+- **Каталог услуг**: фильтрация по категориям, городам и типу (онлайн/офлайн).
+- **Система бронирования**: полный цикл сделки (Запрос → Принятие → Завершение).
+- **Банк Времени**: автоматический перевод кредитов между пользователями после подтверждения услуги.
+- **Мессенджер**: встроенный чат для обсуждения деталей бронирования.
+- **Отзывы и рейтинги**: возможность оценить исполнителя после завершения услуги.
+- **Уведомления**: оповещения о новых сообщениях и изменениях статуса брони в реальном времени.
 
-- **User Profiles**: Avatar upload, skills, bio
-- **Service Catalog**: Filter by category, city, location type
-- **Booking System**: Request → Accept → Complete workflow
-- **Time Bank**: Atomic transfers, transaction history
-- **Messaging**: Internal messenger with booking context
-- **Reviews**: 1-5 star ratings, automatic user rating update
-- **Notifications**: Real-time polling, unread badges
-- **Dashboard**: Stats, recommendations, transaction history
+---
 
-## Design System
+## 🛠 Инструменты тестирования (Backend)
 
-| Color | Hex | Usage |
-|-------|-----|-------|
-| Terracotta | `#E07856` | Primary actions, branding |
-| Olive | `#8B9D77` | Secondary elements |
-| Cream | `#F5E6D3` | Backgrounds |
-| Amber | `#D4A574` | Accents |
-| Deep Green | `#2F5233` | Text, emphasis |
+В папке `backend` доступны скрипты для проверки различных сценариев:
+- `node test-full-flow.js` — полная проверка пути пользователя.
+- `node test-security.js` — аудит безопасности (доступ к чужим данным и т.д.).
+- `node test-performance.js` — проверка скорости работы БД.
 
-## Testing
+---
 
-```bash
-cd backend
-node test-full-flow.js      # End-to-end user flow
-node test-flow-2.js         # Search-to-review flow
-node test-edge-cases.js     # Boundary conditions
-node test-validation.js     # Input validation
-node test-security.js       # Security audit
-node test-performance.js    # Performance benchmarks
-```
-
-## License
-
+## ⚖ Лицензия
 MIT
